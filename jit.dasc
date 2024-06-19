@@ -1,0 +1,14 @@
+#include <dasm_proto.h>
+#include <dasm_x86.h>
+
+|.arch x64
+|.actionlist actions
+
+void emit(dasm_State **Dst, int num) {
+    |.section code
+    dasm_init(Dst, DASM_MAXSECTION);
+    dasm_setup(Dst, actions);
+
+    | mov eax, num
+    | ret
+}

@@ -1,11 +1,14 @@
 all: m6dii
 
-CFLAGS = -I LuaJIT/dynasm
-SRCS := $(wildcard *.c) emit.c
-OBJS := $(patsubst %.c,%.o,$(SRCS))
-
 emit.c: emit.dasc
-	luajit LuaJIT/dynasm/dynasm.lua -o emit.c emit.dasc
+	luajit LuaJIT/dynasm/dynasm.lua $< -o $@
+
+CFLAGS = -I . -I LuaJIT/dynasm
+SRCS := $(wildcard *.c)
+ifeq ($(filter jit.c,$(SRCS)),)
+	SRCS += emit.c
+endif
+OBJS := $(patsubst %.c,%.o,$(SRCS))
 
 %.o: %.c
 	$(CC) $< -c -o $@ $(CFLAGS)
