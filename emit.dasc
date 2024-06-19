@@ -1,0 +1,8 @@
+#include <dasm_proto.h>
+#include <dasm_x86.h>
+
+void emit(dasm_State *d) {
+    |.arch x64
+    |.section code
+    dasm_init(&d, DASM_MAXSECTION); 
+}
